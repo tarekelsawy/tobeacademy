@@ -1,0 +1,6 @@
+{
+  "dart.flutterSdkPath": ".fvm/versions/3.22.0",
+  "editor.bracketPairColorization.enabled": true,
+  "workbench.editor.wrapTabs": true,
+  "java.configuration.updateBuildConfiguration": "interactive"
+}

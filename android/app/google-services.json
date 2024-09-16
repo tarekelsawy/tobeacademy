@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "856891273189",
+    "project_id": "tobeaccademy",
+    "storage_bucket": "tobeaccademy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856891273189:android:11aec22a08eed3fd93c90c",
+        "android_client_info": {
+          "package_name": "com.zxra.beacademy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856891273189-dejaj1r422890h039pkh83qgvmkqhn51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdfsPxvp2XvHjcxKjQ3RwXIOedeKE_xyg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856891273189-dejaj1r422890h039pkh83qgvmkqhn51.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "856891273189-4vuungonsidgcsjao9p9oguc8k7kbidl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gtxr.beacademy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
