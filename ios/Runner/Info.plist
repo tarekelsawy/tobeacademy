@@ -49,6 +49,8 @@
 		<string>tel</string>
 		<string>whatsapp</string>
 	</array>
+	<key>FLTEnableImpeller</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
