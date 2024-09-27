@@ -2,7 +2,7 @@ import UIKit
 import Flutter
 import FirebaseCore
 
-@UIApplicationMain
+@main
 @objc class AppDelegate: FlutterAppDelegate {
   private var textField = UITextField()
   override func application(
