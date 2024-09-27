@@ -15,18 +15,16 @@ class SplashScreen extends BaseView<SplashController> {
 
   @override
   Widget buildBody(BuildContext context) {
-    return UpgradeAlert(
-      upgrader: Upgrader(canDismissDialog: false,showIgnore: false, showLater: false, showReleaseNotes: false),
-      child: Obx(
-            () => AnimatedOpacity(
-          opacity: controller.logoOpacity.value,
-          duration: const Duration(seconds: 3),
-          curve: Curves.linear,
-          child: Center(
-            child: Image.asset(
-               pref.darkTheme? AppImages.logoBlack: AppImages.logoWhite,
-              width: Get.width - 100,
-            ),
+    // upgrader removed from here
+    return Obx(
+          () => AnimatedOpacity(
+        opacity: controller.logoOpacity.value,
+        duration: const Duration(seconds: 3),
+        curve: Curves.linear,
+        child: Center(
+          child: Image.asset(
+             pref.darkTheme? AppImages.logoBlack: AppImages.logoWhite,
+            width: Get.width - 100,
           ),
         ),
       ),
