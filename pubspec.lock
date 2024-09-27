@@ -849,10 +849,10 @@ packages:
     dependency: "direct main"
     description:
       name: no_screenshot
-      sha256: c8621208e3e01e5b9c6d8f4611241465436618ffd3da8340bd533f8241a33fc5
+      sha256: ec3d86d7ee89a09c3a3939c1003012536ba4b3fcb4f8cbd23d87ada595c99258
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1+6"
+    version: "0.3.1"
   octo_image:
     dependency: transitive
     description:
@@ -1025,10 +1025,10 @@ packages:
     dependency: transitive
     description:
       name: plugin_platform_interface
-      sha256: f4f88d4a900933e7267e2b353594774fc0d07fb072b47eedcd5b54e1ea3269f8
+      sha256: "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.7"
+    version: "2.1.8"
   pointer_interceptor:
     dependency: transitive
     description:
@@ -1121,10 +1121,10 @@ packages:
     dependency: "direct main"
     description:
       name: screen_protector
-      sha256: "104a294c9e105a398ae93c477089de9bd30747c71157f2c733375a4ed761eaa7"
+      sha256: "305fd157f6f0b210afe216e790022bfe469c3b1d1f2e0d3dcc5906cc9c49c3e9"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.1"
+    version: "1.4.2+1"
   shared_preferences:
     dependency: transitive
     description:
@@ -1574,10 +1574,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: f652077d0bdf60abe4c1f6377448e8655008eef28f128bc023f7b5e8dfeb48fc
+      sha256: "5c5f338a667b4c644744b661f309fb8080bb94b18a7e91ef1dbd343bed00ed6d"
       url: "https://pub.dev"
     source: hosted
-    version: "14.2.4"
+    version: "14.2.5"
   wakelock_plus:
     dependency: "direct main"
     description:
@@ -1670,10 +1670,10 @@ packages:
     dependency: "direct main"
     description:
       name: youtube_explode_dart
-      sha256: "98fd11b51adbbca76cbdb17f560168f1d7a9835cecceea965f49eb1e5eed155c"
+      sha256: "133a65907e6cf839ac7643d92dc5c56b37fcebe4f0a8f0e67716dffa500c0ef0"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.2"
+    version: "2.2.2"
 sdks:
   dart: ">=3.4.0 <4.0.0"
   flutter: ">=3.22.0"
