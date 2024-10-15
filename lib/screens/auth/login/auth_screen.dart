@@ -87,7 +87,7 @@ class AuthScreen extends BaseView<AuthController> {
                     Text(
                       'هل نسيت كلمه المرور؟',
                       style:
-                      Get.textTheme.displayMedium!.copyWith(fontSize: 16),
+                          Get.textTheme.displayMedium!.copyWith(fontSize: 16),
                     ),
                     InkWell(
                         onTap: () => Get.toNamed(Routes.email),
@@ -125,8 +125,21 @@ class AuthScreen extends BaseView<AuthController> {
                   width: Get.width,
                   onPressed: controller.onLogin,
                 ).paddingOnly(bottom: 10),
-                    //!----------------------
-               /* Row(
+                const SizedBox(height: 20),
+                RoundedLoadingButton(
+                  title: 'Enter As Guest',
+                  controller: controller.btnController,
+                  height: 40,
+                  borderRadius: 6,
+                  fontSize: 16,
+                  fontFamily: kMedium,
+                  width: Get.width,
+                  onPressed: () {
+                    Get.toNamed(Routes.home);
+                  },
+                ).paddingOnly(bottom: 10),
+                //!----------------------
+                /* Row(
                   children: [
                     Expanded(
                         child: Container(
@@ -174,7 +187,7 @@ class AuthScreen extends BaseView<AuthController> {
                     txtColor: kBlack,
                     showSpacer: true,
                   ).paddingOnly(bottom: 20),*/
-            //! ------------------------------------
+                //! ------------------------------------
               ],
             ).paddingSymmetric(horizontal: 20),
           ),

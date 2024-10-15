@@ -15,6 +15,7 @@ import 'db/app_pref.dart';
 import 'package:get/get.dart';
 import 'theme/app_themes.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
 List<CameraDescription> cameras = [];
 FirebaseMessaging messaging = FirebaseMessaging.instance;
 // FCM background callback
@@ -24,6 +25,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 var pref = Get.put(AppPreferences());
 
 String deviceId = '';
+
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -42,11 +44,10 @@ main() {
 /// init app for both flavors
 initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-PackageInfo packageInfo = await PackageInfo.fromPlatform();
-String packageName = packageInfo.packageName;
-if((Platform.isAndroid && packageName == 'com.zxra.beacademy' )|| (Platform.isIOS && packageName == 'com.academy.tobeacademy')){
-
-
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  String packageName = packageInfo.packageName;
+  if ((Platform.isAndroid && packageName == 'com.zxra.beacademy') ||
+      (Platform.isIOS && packageName == 'com.academy.tobeacademy')) {
 // final config = TalsecConfig(
 //     /// For Android
 //     androidConfig: AndroidConfig(
@@ -66,7 +67,7 @@ if((Platform.isAndroid && packageName == 'com.zxra.beacademy' )|| (Platform.isIO
 //     // watcherMail: 's.eldin112@gmail.com',
 //     isProd: false,
 //   );
- // Setting up callbacks
+    // Setting up callbacks
 //   final callback = ThreatCallback(
 //       onAppIntegrity: () => exit(0),
 //       onObfuscationIssues: () => exit(0),
@@ -85,48 +86,50 @@ if((Platform.isAndroid && packageName == 'com.zxra.beacademy' )|| (Platform.isIO
 //   // Attaching listener
 //   Talsec.instance.attachListener(callback);
 
-  cameras = await availableCameras();
-  HttpOverrides.global = MyHttpOverrides();
-  await pref.init(); // init GetStorage.
-  await Firebase.initializeApp();
-  initFonts();
+    cameras = await availableCameras();
+    HttpOverrides.global = MyHttpOverrides();
+    await pref.init(); // init GetStorage.
+    await Firebase.initializeApp();
+    initFonts();
 
-  /*SystemChrome.setPreferredOrientations(
+    /*SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);*/
-      SystemChrome.setPreferredOrientations([
+    SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
-  /// init notification ********************************************************
-  /// 
-  //! Re Remove
-  notificationAppLaunchDetails =
-  await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  await initLocalNotifications(flutterLocalNotificationsPlugin);
 
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    FCMHelper().requestFCMIOSPermissions();
-    //FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-    FCMHelper().onMessageReceived();
-    FCMHelper().initRemoteMessage();
-    FCMHelper().onTokenChange();
-  });
+    /// init notification ********************************************************
+    ///
+    //! Re Remove
+    notificationAppLaunchDetails =
+        await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+    await initLocalNotifications(flutterLocalNotificationsPlugin);
 
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  if(Platform.isAndroid) {
-    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    deviceId = '${androidInfo.model}_${androidInfo.id}';
-  }else {
-    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-    deviceId = '${iosInfo.utsname.machine}_${iosInfo.model}';
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FCMHelper().requestFCMIOSPermissions();
+      //FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+      FCMHelper().onMessageReceived();
+      FCMHelper().initRemoteMessage();
+      FCMHelper().onTokenChange();
+    });
+
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      deviceId = '${androidInfo.model}_${androidInfo.id}';
+    } else {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      deviceId = '${iosInfo.utsname.machine}_${iosInfo.model}';
+    }
+
+    Get.put(BaseThemeController());
+
+    /// run app
+    runApp(const App());
+  } else {
+    exit(0);
   }
-
-  Get.put(BaseThemeController());
-
-  /// run app
-  runApp(const App());}
-  else{
-    exit(0);}
 }

@@ -15,13 +15,19 @@ import '../../../main.dart';
 import '../../../models/classes.dart';
 import '../../../widgets/circular_avatar.dart';
 
-
 class RegisterScreen extends BaseView<RegisterController> {
   RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  PageAttributes get pageAttributes =>
-      PageAttributes(title: (controller.args == null)? 'إنشاء حساب جديد' : (controller.args!.action == DataAction.socialLogin)? 'اكمال البيانات': 'تعديل الحساب',  showLine: false, resizeToAvoidBottomInset: true, showNav: false);
+  PageAttributes get pageAttributes => PageAttributes(
+      title: (controller.args == null)
+          ? 'إنشاء حساب جديد'
+          : (controller.args!.action == DataAction.socialLogin)
+              ? 'اكمال البيانات'
+              : 'تعديل الحساب',
+      showLine: false,
+      resizeToAvoidBottomInset: true,
+      showNav: false);
 
   @override
   String? get tag => null;
@@ -40,7 +46,7 @@ class RegisterScreen extends BaseView<RegisterController> {
                   height: 200,
                 ).paddingOnly(bottom: 20),
                 Obx(
-                  ()=> InkWell(
+                  () => InkWell(
                     onTap: controller.changeProfilePic,
                     child: SizedBox(
                       height: 100,
@@ -48,8 +54,10 @@ class RegisterScreen extends BaseView<RegisterController> {
                         children: [
                           CircularAvatar(
                             // onTap: ,
-                            avatarUrl:
-                           controller.args?.image ?? controller.image.value?.path ?? pref.client?.image ?? AppImages.avatar,
+                            avatarUrl: controller.args?.image ??
+                                controller.image.value?.path ??
+                                pref.client?.image ??
+                                AppImages.avatar,
                             fromFile: controller.image.value != null,
                             size: 100,
                           ),
@@ -61,9 +69,13 @@ class RegisterScreen extends BaseView<RegisterController> {
                                 Container(
                                   width: 100,
                                   decoration: BoxDecoration(
-                                    color: kWhite.withOpacity(0.5)
-                                  ),
-                                  child: Center(child: Text('اختر صوره',style: Get.textTheme.displayMedium!.copyWith(fontSize: 14,color: kBlack),)),
+                                      color: kWhite.withOpacity(0.5)),
+                                  child: Center(
+                                      child: Text(
+                                    'اختر صوره',
+                                    style: Get.textTheme.displayMedium!
+                                        .copyWith(fontSize: 14, color: kBlack),
+                                  )),
                                 ),
                               ],
                             ),
@@ -75,66 +87,82 @@ class RegisterScreen extends BaseView<RegisterController> {
                 ).paddingOnly(bottom: 10),
                 Row(
                   children: [
-                    Expanded(child: Column(children: [
-                      Align(
-                          alignment: AlignmentDirectional.topStart,
-                          child: Text(
-                            'الاسم الاول'.tr,
-                            style: Get.textTheme.displayMedium!.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ))
-                          .paddingOnly(bottom: 5)
-                          .paddingSymmetric(horizontal: 5),
-                      Container(
-                          decoration: BoxDecoration(
-                            color: Get.theme.scaffoldBackgroundColor,
-                            border: Border.all(color: kGreyE2),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: BaseTextField(
-                            validator: ValidationUtil.validateString,
-                            hintTxt: '',
-                            controller: controller.firstName,
-                          )).paddingOnly(bottom: 20),
-                    ],)),
-                    const SizedBox(width: 5,),
-                    Expanded(child: Column(children: [
-                      Align(
-                          alignment: AlignmentDirectional.topStart,
-                          child: Text(
-                            'الاسم الاخير'.tr,
-                            style: Get.textTheme.displayMedium!.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ))
-                          .paddingOnly(bottom: 5)
-                          .paddingSymmetric(horizontal: 5),
-                      Container(
-                          decoration: BoxDecoration(
-                            color: Get.theme.scaffoldBackgroundColor,
-                            border: Border.all(color: kGreyE2),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: BaseTextField(
-                            validator: ValidationUtil.validateString,
-                            hintTxt: '',
-                            controller: controller.lastName,
-                          )).paddingOnly(bottom: 20),
-                    ],)),
+                    Expanded(
+                        child: Column(
+                      children: [
+                        Align(
+                                alignment: AlignmentDirectional.topStart,
+                                child: Text(
+                                  'الاسم الاول'.tr,
+                                  style: Get.textTheme.displayMedium!.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400),
+                                ))
+                            .paddingOnly(bottom: 5)
+                            .paddingSymmetric(horizontal: 5),
+                        Container(
+                            decoration: BoxDecoration(
+                              color: Get.theme.scaffoldBackgroundColor,
+                              border: Border.all(color: kGreyE2),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: BaseTextField(
+                              validator: ValidationUtil.validateString,
+                              hintTxt: '',
+                              controller: controller.firstName,
+                              enabled: (controller.args == null)
+                                  ? true
+                                  : (controller.args!.action ==
+                                          DataAction.socialLogin)
+                                      ? true
+                                      : false,
+                            )).paddingOnly(bottom: 20),
+                      ],
+                    )),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                        child: Column(
+                      children: [
+                        Align(
+                                alignment: AlignmentDirectional.topStart,
+                                child: Text(
+                                  'الاسم الاخير'.tr,
+                                  style: Get.textTheme.displayMedium!.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400),
+                                ))
+                            .paddingOnly(bottom: 5)
+                            .paddingSymmetric(horizontal: 5),
+                        Container(
+                            decoration: BoxDecoration(
+                              color: Get.theme.scaffoldBackgroundColor,
+                              border: Border.all(color: kGreyE2),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: BaseTextField(
+                              validator: ValidationUtil.validateString,
+                              hintTxt: '',
+                              controller: controller.lastName,
+                              enabled: (controller.args == null)
+                                  ? true
+                                  : (controller.args!.action ==
+                                          DataAction.socialLogin)
+                                      ? true
+                                      : false,
+                            )).paddingOnly(bottom: 20),
+                      ],
+                    )),
                   ],
                 ),
-
                 Align(
                     alignment: AlignmentDirectional.topStart,
                     child: Text(
                       'email'.tr,
-                      style: Get.textTheme.displayMedium!.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
-                    ))
-                    .paddingOnly(bottom: 5)
-                    .paddingSymmetric(horizontal: 5),
+                      style: Get.textTheme.displayMedium!
+                          .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                    )).paddingOnly(bottom: 5).paddingSymmetric(horizontal: 5),
                 Container(
                     decoration: BoxDecoration(
                       color: Get.theme.scaffoldBackgroundColor,
@@ -147,68 +175,66 @@ class RegisterScreen extends BaseView<RegisterController> {
                       hintTxt: 'example@example.com',
                       controller: controller.email,
                       textInputType: TextInputType.emailAddress,
+                      enabled: (controller.args == null)
+                          ? true
+                          : (controller.args!.action == DataAction.socialLogin)
+                              ? true
+                              : false,
                     )).paddingOnly(bottom: 20),
-                if(controller.args == null)
-                Align(
-                    alignment: AlignmentDirectional.topStart,
-                    child: Text(
-                      'password'.tr,
-                      style: Get.textTheme.displayMedium!.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
-                    ))
-                    .paddingOnly(bottom: 5)
-                    .paddingSymmetric(horizontal: 5),
-                if(controller.args == null)
-                Container(
-                    decoration: BoxDecoration(
-                      color: Get.theme.scaffoldBackgroundColor,
-                      border: Border.all(color: kGreyE2),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: BaseTextField(
-                      hintTxt: '',
-                      validator:(value)=> ValidationUtil.validatePassword(value),
-                      password: false,
-                      obscureText: true,
-                      controller: controller.password,
-                    )).paddingOnly(bottom: 20),
-                if(controller.args == null)
-                Align(
-                    alignment: AlignmentDirectional.topStart,
-                    child: Text(
-                      'تأكيد كلمه المرور',
-                      style: Get.textTheme.displayMedium!.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
-                    ))
-                    .paddingOnly(bottom: 5)
-                    .paddingSymmetric(horizontal: 5),
-                if(controller.args == null)
-                Container(
-                    decoration: BoxDecoration(
-                      color: Get.theme.scaffoldBackgroundColor,
-                      border: Border.all(color: kGreyE2),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: BaseTextField(
-                      hintTxt: '',
-                      validator:(value)=> ValidationUtil.validateConfirmPassword(value,controller.password.text),
-                      password: false,
-                      obscureText: true,
-                      controller: controller.confirmPassword,
-                    )).paddingOnly(bottom: 20),
-
+                if (controller.args == null)
+                  Align(
+                      alignment: AlignmentDirectional.topStart,
+                      child: Text(
+                        'password'.tr,
+                        style: Get.textTheme.displayMedium!.copyWith(
+                            fontSize: 14, fontWeight: FontWeight.w400),
+                      )).paddingOnly(bottom: 5).paddingSymmetric(horizontal: 5),
+                if (controller.args == null)
+                  Container(
+                      decoration: BoxDecoration(
+                        color: Get.theme.scaffoldBackgroundColor,
+                        border: Border.all(color: kGreyE2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: BaseTextField(
+                        hintTxt: '',
+                        validator: (value) =>
+                            ValidationUtil.validatePassword(value),
+                        password: false,
+                        obscureText: true,
+                        controller: controller.password,
+                      )).paddingOnly(bottom: 20),
+                if (controller.args == null)
+                  Align(
+                      alignment: AlignmentDirectional.topStart,
+                      child: Text(
+                        'تأكيد كلمه المرور',
+                        style: Get.textTheme.displayMedium!.copyWith(
+                            fontSize: 14, fontWeight: FontWeight.w400),
+                      )).paddingOnly(bottom: 5).paddingSymmetric(horizontal: 5),
+                if (controller.args == null)
+                  Container(
+                      decoration: BoxDecoration(
+                        color: Get.theme.scaffoldBackgroundColor,
+                        border: Border.all(color: kGreyE2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: BaseTextField(
+                        hintTxt: '',
+                        validator: (value) =>
+                            ValidationUtil.validateConfirmPassword(
+                                value, controller.password.text),
+                        password: false,
+                        obscureText: true,
+                        controller: controller.confirmPassword,
+                      )).paddingOnly(bottom: 20),
                 Align(
                     alignment: AlignmentDirectional.topStart,
                     child: Text(
                       'رقم الهاتف',
-                      style: Get.textTheme.displayMedium!.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
-                    ))
-                    .paddingOnly(bottom: 5)
-                    .paddingSymmetric(horizontal: 5),
+                      style: Get.textTheme.displayMedium!
+                          .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                    )).paddingOnly(bottom: 5).paddingSymmetric(horizontal: 5),
                 Container(
                     decoration: BoxDecoration(
                       color: Get.theme.scaffoldBackgroundColor,
@@ -220,18 +246,19 @@ class RegisterScreen extends BaseView<RegisterController> {
                       validator: ValidationUtil.validatePhoneNumber,
                       controller: controller.phone,
                       textInputType: TextInputType.phone,
+                      enabled: (controller.args == null)
+                          ? true
+                          : (controller.args!.action == DataAction.socialLogin)
+                              ? true
+                              : false,
                     )).paddingOnly(bottom: 20),
-
                 Align(
                     alignment: AlignmentDirectional.topStart,
                     child: Text(
                       'العنوان',
-                      style: Get.textTheme.displayMedium!.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
-                    ))
-                    .paddingOnly(bottom: 5)
-                    .paddingSymmetric(horizontal: 5),
+                      style: Get.textTheme.displayMedium!
+                          .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                    )).paddingOnly(bottom: 5).paddingSymmetric(horizontal: 5),
                 Container(
                     decoration: BoxDecoration(
                       color: Get.theme.scaffoldBackgroundColor,
@@ -246,34 +273,49 @@ class RegisterScreen extends BaseView<RegisterController> {
                     alignment: AlignmentDirectional.topStart,
                     child: Text(
                       'المرحله الدراسيه',
-                      style: Get.textTheme.displayMedium!.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
-                    ))
-                    .paddingOnly(bottom: 5)
-                    .paddingSymmetric(horizontal: 5),
-                DropDown<Classes>(controller.classes, onChange: controller.onSelectClass, hint: 'المرحله التعليميه',initialValue: controller.classes.firstWhereOrNull((element) => element.classKey == pref.client?.classes),).paddingOnly(bottom: controller.args?.action == DataAction.edit? 20:5),
-
-                if(controller.args == null || (controller.args?.action == DataAction.socialLogin))
+                      style: Get.textTheme.displayMedium!
+                          .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                    )).paddingOnly(bottom: 5).paddingSymmetric(horizontal: 5),
+                DropDown<Classes>(
+                  controller.classes,
+                  onChange: controller.onSelectClass,
+                  hint: 'المرحله التعليميه',
+                  initialValue: controller.classes.firstWhereOrNull(
+                      (element) => element.classKey == pref.client?.classes),
+                ).paddingOnly(
+                    bottom:
+                        controller.args?.action == DataAction.edit ? 20 : 5),
+                if (controller.args == null ||
+                    (controller.args?.action == DataAction.socialLogin))
                   Row(
                     children: [
-                      Obx(()=> Checkbox(value: controller.agree.value, onChanged: (val){controller.agree.value =!controller.agree.value;})),
-                      Expanded(child: Text.rich(TextSpan(children: [
-                        TextSpan(
-                            text: 'أنا أوافق علي',
-                            style: Get.textTheme.displayMedium
-                                ?.copyWith(fontSize: 14)),
-                        TextSpan(
-                            text: ' ${'الشروط والاحكام'} ',
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = controller.onShowTerms,
-                            style: Get.textTheme.displayMedium
-                                ?.copyWith(fontSize: 14, color: kPrimary)),
-                      ])),),
+                      Obx(() => Checkbox(
+                          value: controller.agree.value,
+                          onChanged: (val) {
+                            controller.agree.value = !controller.agree.value;
+                          })),
+                      Expanded(
+                        child: Text.rich(TextSpan(children: [
+                          TextSpan(
+                              text: 'أنا أوافق علي',
+                              style: Get.textTheme.displayMedium
+                                  ?.copyWith(fontSize: 14)),
+                          TextSpan(
+                              text: ' ${'الشروط والاحكام'} ',
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = controller.onShowTerms,
+                              style: Get.textTheme.displayMedium
+                                  ?.copyWith(fontSize: 14, color: kPrimary)),
+                        ])),
+                      ),
                     ],
                   ).paddingOnly(bottom: 20),
                 RoundedLoadingButton(
-                  title: (controller.args == null)? 'إنشاء حساب' : (controller.args!.action == DataAction.socialLogin)? 'اكمال البيانات':'تعديل الحساب',
+                  title: (controller.args == null)
+                      ? 'إنشاء حساب'
+                      : (controller.args!.action == DataAction.socialLogin)
+                          ? 'اكمال البيانات'
+                          : 'تعديل الحساب',
                   controller: controller.btnController,
                   height: 50,
                   borderRadius: 15,
@@ -282,7 +324,6 @@ class RegisterScreen extends BaseView<RegisterController> {
                   width: Get.width,
                   onPressed: controller.onLogin,
                 ).paddingOnly(bottom: 10),
-
               ],
             ).paddingSymmetric(horizontal: 20),
           ),

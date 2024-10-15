@@ -363,7 +363,8 @@ class LecturesDetailsScreen extends BaseView<LecturesDetailsController> {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     if (playerController.fullScreen.value != !isPortrait) {
                       //playerController.fullScreen.value = !isPortrait;
-                      playerController.fullScreen.value = playerController.fullScreen.value;
+                      playerController.fullScreen.value =
+                          playerController.fullScreen.value;
                     }
                     print("Rotated");
                   });
@@ -384,22 +385,19 @@ class LecturesDetailsScreen extends BaseView<LecturesDetailsController> {
                                 children: [
                                   Transform.rotate(
                                     angle: 0,
-                                    child: ClipRRect(
-                                      child: SizedBox(
+                                    child: SizedBox(
+                                      height: playerController.fullScreen.value
+                                          ? Get.height
+                                          : 230,
+                                      width: Get.width,
+                                      child: PlayerWidget(
                                         height:
                                             playerController.fullScreen.value
                                                 ? Get.height
                                                 : 230,
-                                        width: Get.width,
-                                        child: PlayerWidget(
-                                          height: playerController
-                                                  .fullScreen.value
-                                              ? Get.height
-                                              : 230,
-                                          videoType: VideoType.youtube,
-                                          video: _.lecture.urlPath!,
-                                          tag: _.lecture.urlPath!,
-                                        ),
+                                        videoType: VideoType.youtube,
+                                        video: _.lecture.urlPath!,
+                                        tag: _.lecture.urlPath!,
                                       ),
                                     ),
                                   ),
@@ -438,8 +436,7 @@ class LecturesDetailsScreen extends BaseView<LecturesDetailsController> {
                                     Container(
                                             height: 0.5,
                                             width: Get.width,
-                                            color: Get
-                                                .textTheme.displayMedium!
+                                            color: Get.textTheme.displayMedium!
                                                 .color!)
                                         .paddingSymmetric(vertical: 10),
                                   if (!playerController.fullScreen.value)
