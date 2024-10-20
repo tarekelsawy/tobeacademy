@@ -329,154 +329,184 @@ import 'package:icourseapp/screens/lectures/details/lectures_details_controller.
 import 'package:icourseapp/screens/player/player_controller.dart';
 import 'package:icourseapp/screens/player/player_screen.dart';
 import 'package:icourseapp/theme/app_colors.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import '../../player/youtube_player2_controller.dart';
 
 class LecturesDetailsScreen extends BaseView<LecturesDetailsController> {
   LecturesDetailsScreen({Key? key}) : super(key: key);
   final PlayerController videoPlayerController = Get.put(PlayerController());
+
+  late YoutubePlayerController _youtubePlayerController;
 
   @override
   PageAttributes get pageAttributes => PageAttributes(
         showAppBar: false,
         showNav: false,
       );
-
   @override
   Widget buildBody(BuildContext context) {
     final PlayerController playerController = Get.find();
+    final YoutubePlayer2Controller videoPlayer2Controller =
+        Get.put(YoutubePlayer2Controller(videoId: controller.lecture.urlPath!));
+    bool isNewVideoPlayer = true;
+
     return GetBuilder(
         init: controller,
         global: false,
         tag: tag,
         builder: (_) {
-          return Obx(() => Scaffold(
-              appBar: playerController.fullScreen.value
-                  ? null
-                  : AppBar(
-                      centerTitle: true,
-                      title: Text(controller.lecture.title ?? ""),
-                    ),
-              body: OrientationBuilder(
-                builder: (context, orientation) {
-                  bool isPortrait = orientation == Orientation.portrait;
+          return YoutubePlayerBuilder(
+              player: YoutubePlayer(
+                  controller: videoPlayer2Controller.youtubePlayer2Controller),
+              builder: (BuildContext context, Widget player) {
+                return Obx(() => Scaffold(
+                    appBar: playerController.fullScreen.value
+                        ? null
+                        : AppBar(
+                            centerTitle: true,
+                            title: Text(controller.lecture.title ?? ""),
+                          ),
+                    body: OrientationBuilder(
+                      builder: (context, orientation) {
+                        bool isPortrait = orientation == Orientation.portrait;
 
-                  // Use a post-frame callback to update the state after the build process is complete
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    if (playerController.fullScreen.value != !isPortrait) {
-                      //playerController.fullScreen.value = !isPortrait;
-                      playerController.fullScreen.value =
-                          playerController.fullScreen.value;
-                    }
-                    print("Rotated");
-                  });
+                        // Use a post-frame callback to update the state after the build process is complete
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          if (playerController.fullScreen.value !=
+                              !isPortrait) {
+                            //playerController.fullScreen.value = !isPortrait;
+                            playerController.fullScreen.value =
+                                playerController.fullScreen.value;
+                          }
+                          print("Rotated");
+                        });
 
-                  return Column(
-                    children: [
-                      Expanded(
-                        child: Obx(() => Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: playerController.fullScreen.value
-                                      ? 0
-                                      : 20,
-                                  vertical: playerController.fullScreen.value
-                                      ? 0
-                                      : 10),
-                              child: SingleChildScrollView(
-                                  child: Column(
-                                children: [
-                                  Transform.rotate(
-                                    angle: 0,
-                                    child: SizedBox(
-                                      height: playerController.fullScreen.value
-                                          ? Get.height
-                                          : 230,
-                                      width: Get.width,
-                                      child: PlayerWidget(
-                                        height:
+                        return Column(
+                          children: [
+                            Expanded(
+                              child: Obx(() => Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
                                             playerController.fullScreen.value
+                                                ? 0
+                                                : 20,
+                                        vertical:
+                                            playerController.fullScreen.value
+                                                ? 0
+                                                : 10),
+                                    child: SingleChildScrollView(
+                                        child: Column(
+                                      children: [
+                                        Transform.rotate(
+                                          angle: 0,
+                                          child: SizedBox(
+                                            height: playerController
+                                                    .fullScreen.value
                                                 ? Get.height
                                                 : 230,
-                                        videoType: VideoType.youtube,
-                                        video: _.lecture.urlPath!,
-                                        tag: _.lecture.urlPath!,
-                                      ),
-                                    ),
-                                  ),
-                                  !playerController.fullScreen.value
-                                      ? const SizedBox(height: 20)
-                                      : const SizedBox(),
-                                  if (_.lecture.shortDescription != null &&
-                                      playerController.fullScreen.value)
-                                    Align(
-                                        alignment:
-                                            AlignmentDirectional.topStart,
-                                        child: Text(
-                                          'الوصف',
-                                          style: Get.textTheme.displayMedium!
-                                              .copyWith(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w700),
-                                        )),
-                                  if (_.lecture.shortDescription != null &&
-                                      playerController.fullScreen.value)
-                                    Align(
-                                        alignment:
-                                            AlignmentDirectional.topStart,
-                                        child: Text(
-                                          _.lecture.shortDescription ?? '',
-                                          style: Get.textTheme.displayMedium!
-                                              .copyWith(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Get.textTheme
-                                                      .displayMedium!.color!
-                                                      .withOpacity(0.7)),
-                                        )),
-                                  if (_.lecture.shortDescription != null &&
-                                      playerController.fullScreen.value)
-                                    Container(
-                                            height: 0.5,
                                             width: Get.width,
-                                            color: Get.textTheme.displayMedium!
-                                                .color!)
-                                        .paddingSymmetric(vertical: 10),
-                                  if (!playerController.fullScreen.value)
-                                    InkWell(
-                                      onTap: () {
-                                        Get.toNamed(Routes.quiz,
-                                            arguments: QuizArgs(
-                                                modelId: _.lecture.id!,
-                                                isCourse: false));
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              'الاختبارات',
-                                              style: Get
-                                                  .textTheme.displayMedium!
-                                                  .copyWith(
-                                                      color: kPrimary,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w700),
+                                            child: isNewVideoPlayer? player: PlayerWidget(
+                                              height: playerController
+                                                      .fullScreen.value
+                                                  ? Get.height
+                                                  : 230,
+                                              videoType: VideoType.youtube,
+                                              video: _.lecture.urlPath!,
+                                              tag: _.lecture.urlPath!,
+                                              isPlayerWithQuality: false,
                                             ),
                                           ),
-                                          Icon(
-                                            Icons.arrow_forward_ios_rounded,
-                                            color: Get.textTheme.displayMedium!
-                                                .color!,
+                                        ),
+                                        !playerController.fullScreen.value
+                                            ? const SizedBox(height: 20)
+                                            : const SizedBox(),
+                                        if (_.lecture.shortDescription !=
+                                                null &&
+                                            playerController.fullScreen.value)
+                                          Align(
+                                              alignment:
+                                                  AlignmentDirectional.topStart,
+                                              child: Text(
+                                                'الوصف',
+                                                style: Get
+                                                    .textTheme.displayMedium!
+                                                    .copyWith(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                              )),
+                                        if (_.lecture.shortDescription !=
+                                                null &&
+                                            playerController.fullScreen.value)
+                                          Align(
+                                              alignment:
+                                                  AlignmentDirectional.topStart,
+                                              child: Text(
+                                                _.lecture.shortDescription ??
+                                                    '',
+                                                style: Get
+                                                    .textTheme.displayMedium!
+                                                    .copyWith(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Get
+                                                            .textTheme
+                                                            .displayMedium!
+                                                            .color!
+                                                            .withOpacity(0.7)),
+                                              )),
+                                        if (_.lecture.shortDescription !=
+                                                null &&
+                                            playerController.fullScreen.value)
+                                          Container(
+                                                  height: 0.5,
+                                                  width: Get.width,
+                                                  color: Get.textTheme
+                                                      .displayMedium!.color!)
+                                              .paddingSymmetric(vertical: 10),
+                                        if (!playerController.fullScreen.value)
+                                          InkWell(
+                                            onTap: () {
+                                              Get.toNamed(Routes.quiz,
+                                                  arguments: QuizArgs(
+                                                      modelId: _.lecture.id!,
+                                                      isCourse: false));
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    'الاختبارات',
+                                                    style: Get.textTheme
+                                                        .displayMedium!
+                                                        .copyWith(
+                                                            color: kPrimary,
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                  ),
+                                                ),
+                                                Icon(
+                                                  Icons
+                                                      .arrow_forward_ios_rounded,
+                                                  color: Get.textTheme
+                                                      .displayMedium!.color!,
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                ],
-                              )),
-                            )),
-                      ),
-                    ],
-                  );
-                },
-              )));
+                                      ],
+                                    )),
+                                  )),
+                            ),
+                          ],
+                        );
+                      },
+                    )));
+              });
         });
   }
 }

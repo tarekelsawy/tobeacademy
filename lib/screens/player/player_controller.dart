@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:icourseapp/base/base_controller.dart';
 import 'package:icourseapp/screens/player/video_player_repository.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class PlayerController extends BaseController {
   @override

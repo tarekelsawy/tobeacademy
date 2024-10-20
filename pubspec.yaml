@@ -105,6 +105,7 @@ dependencies:
   archive: ^3.6.1
   custom_player:
     path: packages/custom_player
+  youtube_player_flutter: ^9.1.1
 
 #flutter_native_splash:
 #  adroid: true

@@ -14,11 +14,10 @@ class LecturesDetailsController extends BaseController {
 
   @override
   onCreate() {
-    if(!isLoggedIn()) return;
+    if (!isLoggedIn()) return;
     if (lecture.type == LectureType.bunny) {
       loadLectures.value = true;
       _loadWebView();
-
     }
   }
 
@@ -55,16 +54,20 @@ class LecturesDetailsController extends BaseController {
             return NavigationDecision.navigate;
           },
         ),
-      )..clearCache()
+      )
+      ..clearCache()
       ..loadRequest(
           Uri.dataFromString(lecture.urlPath ?? '', mimeType: 'text/html'));
+    
   }
+
   @override
   onDestroy() {
     // TODO: implement onDestroy
     Get.delete<PlayerController>();
     return super.onDestroy();
   }
+
   @override
   void onClose() {
     // TODO: implement onClose
