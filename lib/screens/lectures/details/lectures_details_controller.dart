@@ -21,6 +21,14 @@ class LecturesDetailsController extends BaseController {
     }
   }
 
+  var isFirstPlayerActive = true.obs; // Observable for toggle state
+
+  // Toggle function to switch between players
+  void togglePlayer() {
+    isFirstPlayerActive.value = !isFirstPlayerActive.value;
+    update(); // Notify widgets about the state change
+  }
+
   /*stopVideo() {
     if (Get.isRegistered<PlayerController>(tag: lecture.urlPath)) {
       Get.find<PlayerController>(tag: lecture.urlPath).videoController.pause();

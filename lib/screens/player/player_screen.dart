@@ -1,20 +1,14 @@
 import 'dart:developer';
 
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:icourseapp/main.dart';
 import 'package:icourseapp/models/course.dart';
-import 'package:icourseapp/modern_player/src/modern_player.dart';
-import 'package:icourseapp/modern_player/src/modern_player_options.dart';
 import 'package:icourseapp/screens/player/player_controller.dart';
 import 'package:icourseapp/screens/player/water_mark.dart';
 import 'package:icourseapp/theme/app_colors.dart';
 import 'package:custom_player/video_player/custom_video_player_view.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../db/app_pref.dart';
-import 'youtube_player2_controller.dart';
 
 class PlayerWidget extends StatelessWidget {
   final String video;
@@ -22,13 +16,14 @@ class PlayerWidget extends StatelessWidget {
   final String tag;
   final VideoType videoType;
   final bool isPlayerWithQuality;
+  final Widget? secondPlayerWidget;
   const PlayerWidget({
     Key? key,
     required this.video,
     required this.height,
     required this.videoType,
     this.tag = 'youtube',
-    required this.isPlayerWithQuality,
+    required this.isPlayerWithQuality , required this.secondPlayerWidget,
   }) : super(key: key);
 
   @override
@@ -45,17 +40,17 @@ class PlayerWidget extends StatelessWidget {
     // );
     var modernPlayerWidget = isPlayerWithQuality
         ? SizedBox(
-            height: this.height,
+            height: height,
             child: AspectRatio(
               aspectRatio: 16 / 9,
               child: CustomVideoPlayer(
-                youtubeId: this.video,
+                youtubeId: video,
                 name: pref.client?.name ?? '',
                 phone: pref.client?.phone ?? '',
               ),
             ),
           )
-        : FullPlayVideo();
+        : secondPlayerWidget;
     log(video, name: "video");
     log(videoType.id, name: "id");
     log(videoType.name, name: "name");
@@ -103,85 +98,6 @@ class PlayerWidget extends StatelessWidget {
   }
 }
 
-class FullPlayVideo extends StatefulWidget {
-  const FullPlayVideo({super.key});
-
-  @override
-  _FullPlayVideoState createState() => _FullPlayVideoState();
-}
-
-class _FullPlayVideoState extends State<FullPlayVideo> {
-  late YoutubePlayer2Controller youtubePlayer2Controller;
-
-  @override
-  void initState() {
-    super.initState();
-    youtubePlayer2Controller = Get.find();
-  }
-
-  @override
-  Future<void> dispose() async {
-    // widget.youtubePlayerController.dispose();
-    // await SystemChrome.setPreferredOrientations([
-    //   DeviceOrientation.portraitUp,
-    //   DeviceOrientation.portraitDown,
-    // ]);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        YoutubePlayer(
-          topActions: [
-            const Spacer(),
-            IconButton(
-              onPressed: () {
-                youtubePlayer2Controller.skip10sec();
-              },
-              icon: const Icon(Icons.forward_10),
-            ),
-            IconButton(
-              onPressed: () {
-                youtubePlayer2Controller.skip5sec();
-              },
-              icon: const Icon(Icons.forward_5),
-            ),
-            IconButton(
-              onPressed: () {
-                youtubePlayer2Controller.previous5sec();
-              },
-              icon: const Icon(Icons.replay_5),
-            ),
-            IconButton(
-              onPressed: () {
-                youtubePlayer2Controller.previous10sec();
-              },
-              icon: const Icon(Icons.replay_10),
-            ),
-            const Spacer(),
-          ],
-          controlsTimeOut: const Duration(seconds: 5),
-          thumbnail: const SizedBox(),
-          controller: youtubePlayer2Controller.youtubePlayer2Controller,
-          showVideoProgressIndicator: true,
-          progressIndicatorColor: kPrimaryDark,
-          onReady: () {
-            youtubePlayer2Controller.youtubePlayer2Controller.addListener(() {
-              if (!youtubePlayer2Controller
-                  .youtubePlayer2Controller.value.isPlaying) {
-                youtubePlayer2Controller.youtubePlayer2Controller.play();
-              }
-            });
-          },
-        ),
-      ],
-    );
-  }
-
-  // Skip forward 5 seconds
-}
 /*import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icourseapp/main.dart';
