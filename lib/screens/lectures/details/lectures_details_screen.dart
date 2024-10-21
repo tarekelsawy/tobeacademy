@@ -361,6 +361,40 @@ class LecturesDetailsScreen extends BaseView<LecturesDetailsController> {
                   player: YoutubePlayer(
                     controller: videoPlayer2Controller.youtubePlayer2Controller,
                     aspectRatio: 230 / MediaQuery.of(context).size.width,
+                    topActions: [
+                      Expanded(
+                        child: IconButton(
+                          onPressed: () {
+                            videoPlayer2Controller.skip10sec();
+                          },
+                          icon: const Icon(Icons.forward_10, color: kPrimary),
+                        ),
+                      ),
+                      Expanded(
+                        child: IconButton(
+                          onPressed: () {
+                            videoPlayer2Controller.skip5sec();
+                          },
+                          icon: const Icon(Icons.forward_5, color: kPrimary),
+                        ),
+                      ),
+                      Expanded(
+                        child: IconButton(
+                          onPressed: () {
+                            videoPlayer2Controller.previous5sec();
+                          },
+                          icon: const Icon(Icons.replay_5, color: kPrimary),
+                        ),
+                      ),
+                      Expanded(
+                        child: IconButton(
+                          onPressed: () {
+                            videoPlayer2Controller.previous10sec();
+                          },
+                          icon: const Icon(Icons.replay_10, color: kPrimary),
+                        ),
+                      ),
+                    ],
                   ),
                   builder: (BuildContext context, Widget player) {
                     return Scaffold(
