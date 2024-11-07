@@ -14,12 +14,19 @@ class LecturesDetailsController extends BaseController {
 
   @override
   onCreate() {
-    if(!isLoggedIn()) return;
+    if (!isLoggedIn()) return;
     if (lecture.type == LectureType.bunny) {
       loadLectures.value = true;
       _loadWebView();
-
     }
+  }
+
+  var isFirstPlayerActive = true.obs; // Observable for toggle state
+
+  // Toggle function to switch between players
+  void togglePlayer() {
+    isFirstPlayerActive.value = !isFirstPlayerActive.value;
+    update(); // Notify widgets about the state change
   }
 
   /*stopVideo() {
@@ -55,16 +62,20 @@ class LecturesDetailsController extends BaseController {
             return NavigationDecision.navigate;
           },
         ),
-      )..clearCache()
+      )
+      ..clearCache()
       ..loadRequest(
           Uri.dataFromString(lecture.urlPath ?? '', mimeType: 'text/html'));
+    
   }
+
   @override
   onDestroy() {
     // TODO: implement onDestroy
     Get.delete<PlayerController>();
     return super.onDestroy();
   }
+
   @override
   void onClose() {
     // TODO: implement onClose

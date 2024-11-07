@@ -76,6 +76,8 @@ class LecturesScreen extends BaseView<LecturesController> {
                       height: 250,
                       child: PlayerWidget(
                         height: 250,
+                        secondPlayerWidget: const SizedBox(),
+                        isPlayerWithQuality: false,
                         videoType: VideoType.youtube,
                         video: _.lessons.first.lectures!.first.introVideo!,
                         tag: _.lessons.first.lectures!.first.introVideo!,

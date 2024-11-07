@@ -33,7 +33,8 @@ class App extends StatelessWidget {
               Locale('en'),
               Locale('ar')
             ],
-            title: LocalizationService.isRtl() ? 'تو بي اكاديمي' : 'To Be Academy',
+            // title: LocalizationService.isRtl() ? 'تو بي اكاديمي' : 'To Be Academy',
+            title:  'تو بي اكاديمي' ,
             theme: controller.currentTheme,
             locale: LocalizationService.getCurrentLocale(),
             fallbackLocale: LocalizationService.fallbackLocale,

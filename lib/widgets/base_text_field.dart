@@ -35,6 +35,7 @@ class BaseTextField extends StatefulWidget {
   final Function? onTap;
   final Widget? leading;
   final ValueChanged<String>? onSubmit;
+  final bool? enabled;
 
   const BaseTextField(
       {Key? key,
@@ -68,7 +69,7 @@ class BaseTextField extends StatefulWidget {
       this.textInputType,
       this.suffixText,
       this.focusNode,
-      this.onTap})
+      this.onTap, this.enabled})
       : super(key: key);
 
   @override
@@ -76,7 +77,7 @@ class BaseTextField extends StatefulWidget {
 }
 
 class _BaseTextFieldState extends State<BaseTextField> {
-  late bool _obscureText ;
+  late bool _obscureText;
   var key = GlobalKey();
   String? currentTxt;
   final TextEditingController _searchController = TextEditingController();
@@ -88,9 +89,11 @@ class _BaseTextFieldState extends State<BaseTextField> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        enabled: widget.enabled,
         onTap: () => widget.onTap?.call(),
         focusNode: widget.focusNode,
         key: key,
@@ -122,7 +125,9 @@ class _BaseTextFieldState extends State<BaseTextField> {
                     FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                   ]
                 : null,
-        style: Get.textTheme.displayMedium!.copyWith(fontSize: widget.fontSize, color: Get.textTheme.displayMedium!.color),
+        style: Get.textTheme.displayMedium!.copyWith(
+            fontSize: widget.fontSize,
+            color: Get.textTheme.displayMedium!.color),
         cursorColor: Get.textTheme.displayMedium!.color,
         keyboardType: (widget.textInputType != null)
             ? widget.textInputType
@@ -132,27 +137,28 @@ class _BaseTextFieldState extends State<BaseTextField> {
                     ? TextInputType.phone
                     : TextInputType.text,
         decoration: InputDecoration(
-            suffixText: widget.suffixText,
-            suffixStyle: const TextStyle(color: kPrimary, fontSize: 16),
-            filled: true,
-            fillColor: widget.filledColor,
-            hintText: widget.hintTxt,
-            hintStyle: widget.hintStyle ??
-                Get.textTheme.displayMedium!.copyWith(
-                    fontSize: widget.fontSize, color: Get.textTheme.displayMedium!.color!.withOpacity(0.5)),
-            errorStyle:
-                Get.textTheme.displayMedium!.copyWith(color: kRed, fontSize: 12),
-            contentPadding: EdgeInsets.only(
-                left: widget.contentPaddingLeft,
-                bottom: widget.verticalPadding,
-                top: widget.verticalPadding,
-                right: widget.contentPaddingRight),
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            focusedErrorBorder:InputBorder.none,
-            prefixIcon: widget.leading,
-            suffixIcon: _suffixIcon(),
+          suffixText: widget.suffixText,
+          suffixStyle: const TextStyle(color: kPrimary, fontSize: 16),
+          filled: true,
+          fillColor: widget.filledColor,
+          hintText: widget.hintTxt,
+          hintStyle: widget.hintStyle ??
+              Get.textTheme.displayMedium!.copyWith(
+                  fontSize: widget.fontSize,
+                  color: Get.textTheme.displayMedium!.color!.withOpacity(0.5)),
+          errorStyle:
+              Get.textTheme.displayMedium!.copyWith(color: kRed, fontSize: 12),
+          contentPadding: EdgeInsets.only(
+              left: widget.contentPaddingLeft,
+              bottom: widget.verticalPadding,
+              top: widget.verticalPadding,
+              right: widget.contentPaddingRight),
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          focusedErrorBorder: InputBorder.none,
+          prefixIcon: widget.leading,
+          suffixIcon: _suffixIcon(),
         ),
         obscureText: _obscureText,
         onSaved: widget.onSave,

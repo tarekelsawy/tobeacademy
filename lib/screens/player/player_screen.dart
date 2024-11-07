@@ -1,72 +1,122 @@
 import 'dart:developer';
 
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:icourseapp/main.dart';
 import 'package:icourseapp/models/course.dart';
-import 'package:icourseapp/modern_player/src/modern_player.dart';
-import 'package:icourseapp/modern_player/src/modern_player_options.dart';
 import 'package:icourseapp/screens/player/player_controller.dart';
 import 'package:icourseapp/screens/player/water_mark.dart';
 import 'package:icourseapp/theme/app_colors.dart';
-class PlayerWidget extends StatelessWidget {
+import 'package:custom_player/video_player/custom_video_player_view.dart';
+
+import '../../db/app_pref.dart';
+
+class PlayerWidget extends StatefulWidget {
   final String video;
   final double height;
   final String tag;
   final VideoType videoType;
+  final bool isPlayerWithQuality;
+  final Widget? secondPlayerWidget;
   const PlayerWidget({
     Key? key,
     required this.video,
     required this.height,
     required this.videoType,
     this.tag = 'youtube',
+    required this.isPlayerWithQuality,
+    required this.secondPlayerWidget,
   }) : super(key: key);
 
   @override
+  State<PlayerWidget> createState() => _PlayerWidgetState();
+}
+
+class _PlayerWidgetState extends State<PlayerWidget> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Set the preferred orientation to portrait only
+  //   SystemChrome.setPreferredOrientations([
+  //     DeviceOrientation.portraitUp,
+  //   ]);
+  // }
+
+  // @override
+  // void dispose() {
+  //   // Reset the orientation to allow all modes when leaving this screen
+  //   SystemChrome.setPreferredOrientations([
+  //     DeviceOrientation.portraitUp,
+  //     DeviceOrientation.portraitDown,
+  //     DeviceOrientation.landscapeLeft,
+  //     DeviceOrientation.landscapeRight,
+  //   ]);
+  //   super.dispose();
+  // }
+
+  @override
   Widget build(BuildContext context) {
-    var modernPlayerWidget = SizedBox(
-      height: this.height,
-      child: ModernPlayer.createPlayer(
-        controlsOptions:ModernPlayerControlsOptions(
-          showBackbutton: false
-        ),
-          video: ModernPlayerVideo.youtubeWithId(
-              id: this.video, fetchQualities: true)),
-    );
-    log(video, name: "video");
-    log(videoType.id, name: "id");
-    log(videoType.name, name: "name");
+    var pref = Get.put(AppPreferences());
+    // var modernPlayerWidget = SizedBox(
+    //   height: this.height,
+    //   child: ModernPlayer.createPlayer(
+    //     controlsOptions:ModernPlayerControlsOptions(
+    //       showBackbutton: false
+    //     ),
+    //       video: ModernPlayerVideo.youtubeWithId(
+    //           id: this.video, fetchQualities: true)),
+    // );
+    var modernPlayerWidget = widget.isPlayerWithQuality
+        ? SizedBox(
+            // height: widget.height,
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: CustomVideoPlayer(
+                youtubeId: widget.video,
+                name: pref.client?.name ?? '',
+                phone: pref.client?.phone ?? '',
+              ),
+            ),
+          )
+        : widget.secondPlayerWidget;
+    log(widget.video, name: "video");
+    log(widget.videoType.id, name: "id");
+    log(widget.videoType.name, name: "name");
     return GetBuilder<PlayerController>(
-      init:PlayerController() ,
+      init: PlayerController(),
       builder: (controller) => Directionality(
         textDirection: TextDirection.ltr,
         child: Stack(
           children: [
-             Container(
+            Container(
                 //width: Get.width,
                 //height: Get.height,
                 color: pref.darkTheme ? kWhite : kBlack,
-                child: modernPlayerWidget
-              ),
-            
-            //? For Wate Marking 
+                child: modernPlayerWidget),
+
+            //? For Wate Marking
             if (controller.isLoggedIn())
-              Positioned.fill(child: WaterMarkWidget()),
+              Positioned.fill(
+                  child:
+                      IgnorePointer(ignoring: true, child: WaterMarkWidget())),
             if (controller.isLoggedIn())
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      child: Text(
-                        pref.client?.phone ?? '',
-                        style: Get.textTheme.displayLarge!.copyWith(
-                            color: kBlack.withOpacity(0.3),
-                            fontSize: 18,
-                            backgroundColor: kWhite.withOpacity(0.2)),
+              IgnorePointer(
+                ignoring: true,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        child: Text(
+                          pref.client?.phone ?? '',
+                          style: Get.textTheme.displayLarge!.copyWith(
+                              color: kBlack.withOpacity(0.3),
+                              fontSize: 18,
+                              backgroundColor: kWhite.withOpacity(0.2)),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
           ],
@@ -75,7 +125,6 @@ class PlayerWidget extends StatelessWidget {
     );
   }
 }
-
 
 /*import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -254,4 +303,3 @@ class PlayerWidget extends StatelessWidget {
     );
   }
 }*/
-

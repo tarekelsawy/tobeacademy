@@ -39,7 +39,7 @@ class SplashController extends BaseAuthController
   _startTimer() {
          
 
-    //  AppUtil. noScreenshot.screenshotOff();
+     AppUtil.noScreenshot.screenshotOff();
     _worker = debounce(logoOpacity, (_) => finishSplash(),
         time: const Duration(seconds: 3));
   }

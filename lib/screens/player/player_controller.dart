@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:icourseapp/base/base_controller.dart';
 import 'package:icourseapp/screens/player/video_player_repository.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class PlayerController extends BaseController {
   @override
@@ -26,6 +27,14 @@ class PlayerController extends BaseController {
       positionX.value = random.nextDouble() * (Get.width - 50);
       positionY.value = random.nextDouble() * 100;
     });
+  }
+
+  var isFirstPlayerActive = true.obs; // Observable for toggle state
+
+  // Toggle function to switch between players
+  void togglePlayer() {
+    isFirstPlayerActive.value = !isFirstPlayerActive.value;
+    update(); // Notify widgets about the state change
   }
 
   @override

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/utils.dart';
 import 'package:icourseapp/main.dart';
 
+import '../../db/app_pref.dart';
 import '../../theme/app_colors.dart';
 
 class WaterMarkWidget extends StatefulWidget {
@@ -27,7 +28,7 @@ class _WaterMarkWidgetState extends State<WaterMarkWidget>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 15),
+      duration:const Duration(seconds: 15),
     );
 
     _animation = Tween<double>(
