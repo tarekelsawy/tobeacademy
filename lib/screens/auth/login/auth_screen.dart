@@ -125,19 +125,20 @@ class AuthScreen extends BaseView<AuthController> {
                   width: Get.width,
                   onPressed: controller.onLogin,
                 ).paddingOnly(bottom: 10),
-                const SizedBox(height: 20),
-                RoundedLoadingButton(
-                  title: 'Enter As Guest',
-                  controller: controller.btnController,
-                  height: 40,
-                  borderRadius: 6,
-                  fontSize: 16,
-                  fontFamily: kMedium,
-                  width: Get.width,
-                  onPressed: () {
-                    Get.toNamed(Routes.home);
-                  },
-                ).paddingOnly(bottom: 10),
+                // todo for ios review
+                // const SizedBox(height: 20),
+                // RoundedLoadingButton(
+                //   title: 'Enter As Guest',
+                //   controller: controller.btnController,
+                //   height: 40,
+                //   borderRadius: 6,
+                //   fontSize: 16,
+                //   fontFamily: kMedium,
+                //   width: Get.width,
+                //   onPressed: () {
+                //     Get.toNamed(Routes.home);
+                //   },
+                // ).paddingOnly(bottom: 10),
                 //!----------------------
                 /* Row(
                   children: [

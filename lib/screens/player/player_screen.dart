@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:icourseapp/models/course.dart';
@@ -10,7 +11,7 @@ import 'package:custom_player/video_player/custom_video_player_view.dart';
 
 import '../../db/app_pref.dart';
 
-class PlayerWidget extends StatelessWidget {
+class PlayerWidget extends StatefulWidget {
   final String video;
   final double height;
   final String tag;
@@ -23,8 +24,35 @@ class PlayerWidget extends StatelessWidget {
     required this.height,
     required this.videoType,
     this.tag = 'youtube',
-    required this.isPlayerWithQuality , required this.secondPlayerWidget,
+    required this.isPlayerWithQuality,
+    required this.secondPlayerWidget,
   }) : super(key: key);
+
+  @override
+  State<PlayerWidget> createState() => _PlayerWidgetState();
+}
+
+class _PlayerWidgetState extends State<PlayerWidget> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Set the preferred orientation to portrait only
+  //   SystemChrome.setPreferredOrientations([
+  //     DeviceOrientation.portraitUp,
+  //   ]);
+  // }
+
+  // @override
+  // void dispose() {
+  //   // Reset the orientation to allow all modes when leaving this screen
+  //   SystemChrome.setPreferredOrientations([
+  //     DeviceOrientation.portraitUp,
+  //     DeviceOrientation.portraitDown,
+  //     DeviceOrientation.landscapeLeft,
+  //     DeviceOrientation.landscapeRight,
+  //   ]);
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -38,22 +66,22 @@ class PlayerWidget extends StatelessWidget {
     //       video: ModernPlayerVideo.youtubeWithId(
     //           id: this.video, fetchQualities: true)),
     // );
-    var modernPlayerWidget = isPlayerWithQuality
+    var modernPlayerWidget = widget.isPlayerWithQuality
         ? SizedBox(
-            height: height,
+            // height: widget.height,
             child: AspectRatio(
               aspectRatio: 16 / 9,
               child: CustomVideoPlayer(
-                youtubeId: video,
+                youtubeId: widget.video,
                 name: pref.client?.name ?? '',
                 phone: pref.client?.phone ?? '',
               ),
             ),
           )
-        : secondPlayerWidget;
-    log(video, name: "video");
-    log(videoType.id, name: "id");
-    log(videoType.name, name: "name");
+        : widget.secondPlayerWidget;
+    log(widget.video, name: "video");
+    log(widget.videoType.id, name: "id");
+    log(widget.videoType.name, name: "name");
     return GetBuilder<PlayerController>(
       init: PlayerController(),
       builder: (controller) => Directionality(

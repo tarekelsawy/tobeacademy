@@ -1,4 +1,4 @@
-package com.zxra.beacademy
+package com.thezxras.toacademy
 
 import io.flutter.embedding.android.FlutterActivity
 

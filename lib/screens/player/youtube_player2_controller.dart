@@ -21,6 +21,11 @@ class YoutubePlayer2Controller extends GetxController {
         loop: false,
       ),
     );
+
+    youtubePlayer2Controller.addListener(() {
+      updateIsPlaying();
+      updateIsFullScreen();
+    });
   }
 
   // update is become full screen
@@ -28,34 +33,45 @@ class YoutubePlayer2Controller extends GetxController {
     isFullScreen.value = youtubePlayer2Controller.value.isFullScreen;
   }
 
+  void updateIsPlaying() {
+    isPlaying.value = youtubePlayer2Controller.value.isPlaying;
+  }
+
+  // update is playing
+  void togglePlayPause() {
+    if (youtubePlayer2Controller.value.isPlaying) {
+      youtubePlayer2Controller.pause();
+      isPlaying.value = false;
+    } else {
+      youtubePlayer2Controller.play();
+      isPlaying.value = true;
+    }
+  }
+
   void skip5sec() {
     youtubePlayer2Controller.seekTo(
-      youtubePlayer2Controller.value.position +
-          const Duration(seconds: 5),
+      youtubePlayer2Controller.value.position + const Duration(seconds: 5),
     );
   }
 
   // Skip forward 10 seconds
   void skip10sec() {
     youtubePlayer2Controller.seekTo(
-      youtubePlayer2Controller.value.position +
-          const Duration(seconds: 10),
+      youtubePlayer2Controller.value.position + const Duration(seconds: 10),
     );
   }
 
   // Rewind 10 seconds
   void previous10sec() {
     youtubePlayer2Controller.seekTo(
-      youtubePlayer2Controller.value.position -
-          const Duration(seconds: 10),
+      youtubePlayer2Controller.value.position - const Duration(seconds: 10),
     );
   }
 
   // Rewind 5 seconds
   void previous5sec() {
     youtubePlayer2Controller.seekTo(
-      youtubePlayer2Controller.value.position -
-          const Duration(seconds: 5),
+      youtubePlayer2Controller.value.position - const Duration(seconds: 5),
     );
   }
 }

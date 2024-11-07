@@ -4,7 +4,6 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:freerasp/freerasp.dart';
 import 'package:icourseapp/base/base_theme_controllrt.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:icourseapp/fcm/fcm_helper.dart';
@@ -46,7 +45,7 @@ initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   String packageName = packageInfo.packageName;
-  if ((Platform.isAndroid && packageName == 'com.zxra.beacademy') ||
+  if ((Platform.isAndroid && packageName == 'com.thezxras.toacademy') ||
       (Platform.isIOS && packageName == 'com.academy.tobeacademy')) {
 // final config = TalsecConfig(
 //     /// For Android

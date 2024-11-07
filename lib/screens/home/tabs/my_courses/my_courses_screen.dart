@@ -27,61 +27,96 @@ class MyCoursesScreen extends BaseView {
   Widget buildBody(BuildContext context) {
     return GetBuilder<MyCoursesController>(
         init: MyCoursesController(),
-        builder: (controller) => !controller.isLoggedIn()
-            ? const MustLoggedIn()
-            : ShimmerListLoader(
-                controller: controller,
-                height: 270,
-                radius: 20,
-                horizontal: 20,
-                child: SwipeableListView(
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                        onTap: ()=> controller.onCourseNavigate(controller.courses[index]),
-                        child: Card(
-                          color: pref.darkTheme? kPrimary18:kWhite,
-                      shadowColor: !pref.darkTheme? kPrimary18:kWhite,
-                      elevation: 2,
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: CachedNetworkImage(
-                              imageUrl: controller.courses[index].image??'',
-                              height: 80,
-                              width: 80,
-                              fit: BoxFit.cover,
-                              errorWidget: (context, url, val)=> Image.asset(AppImages.logo, height: 80, width: 80,fit: BoxFit.cover,),
-                            ),
-                          ),
-                          const SizedBox(width: 8,),
-                          Expanded(child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(controller.courses[index].title??'',style: Get.textTheme.displayMedium!.copyWith(fontSize: 16,fontWeight: FontWeight.w700),),
-                              Text('${controller.courses[index].lessonsCount??'0'} درس',style: Get.textTheme.displayMedium!.copyWith(fontSize: 14),),
-                              Row(
-                                children: [
-                                  StarRating(
-                                    rating: controller.courses[index].averageRating ?? 0,
-                                    iconSize: 14,
-                                  ),
-                                  const SizedBox(width: 2,),
-                                  Expanded(child: Text(' (${controller.courses[index].averageRating??0}) تقييم',style: Get.textTheme.displayMedium!.copyWith(fontSize: 14),)),
-                                ],
+        builder: (controller) =>
+            !controller.isLoggedIn()
+                ? const MustLoggedIn()
+                :
+            ShimmerListLoader(
+              controller: controller,
+              height: 270,
+              radius: 20,
+              horizontal: 20,
+              child: SwipeableListView(
+                itemBuilder: (context, index) {
+                  return InkWell(
+                      onTap: () => controller
+                          .onCourseNavigate(controller.courses[index]),
+                      child: Card(
+                        color: pref.darkTheme ? kPrimary18 : kWhite,
+                        shadowColor: !pref.darkTheme ? kPrimary18 : kWhite,
+                        elevation: 2,
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: CachedNetworkImage(
+                                imageUrl: controller.courses[index].image ?? '',
+                                height: 80,
+                                width: 80,
+                                fit: BoxFit.cover,
+                                errorWidget: (context, url, val) => Image.asset(
+                                  AppImages.logo,
+                                  height: 80,
+                                  width: 80,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ],
-                          )),
-                          const BaseTextButton(title: 'دخول', height: 35, width: 60,radius: 10,fontSize: 11,),
-                        ],
-                      ).paddingSymmetric(horizontal: 12,vertical: 8),
-                    )).paddingOnly(bottom: 10);
-                  },
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  controller: controller,
-                  itemsCount: controller.courses.length,
-                ),
-              ));
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Expanded(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  controller.courses[index].title ?? '',
+                                  style: Get.textTheme.displayMedium!.copyWith(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                Text(
+                                  '${controller.courses[index].lessonsCount ?? '0'} درس',
+                                  style: Get.textTheme.displayMedium!
+                                      .copyWith(fontSize: 14),
+                                ),
+                                Row(
+                                  children: [
+                                    StarRating(
+                                      rating: controller
+                                              .courses[index].averageRating ??
+                                          0,
+                                      iconSize: 14,
+                                    ),
+                                    const SizedBox(
+                                      width: 2,
+                                    ),
+                                    Expanded(
+                                        child: Text(
+                                      ' (${controller.courses[index].averageRating ?? 0}) تقييم',
+                                      style: Get.textTheme.displayMedium!
+                                          .copyWith(fontSize: 14),
+                                    )),
+                                  ],
+                                ),
+                              ],
+                            )),
+                            const BaseTextButton(
+                              title: 'دخول',
+                              height: 35,
+                              width: 60,
+                              radius: 10,
+                              fontSize: 11,
+                            ),
+                          ],
+                        ).paddingSymmetric(horizontal: 12, vertical: 8),
+                      )).paddingOnly(bottom: 10);
+                },
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                controller: controller,
+                itemsCount: controller.courses.length,
+              ),
+            ));
   }
 }

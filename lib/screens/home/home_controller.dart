@@ -166,7 +166,7 @@ class HomeController extends BottomBarController {
       //       Get.offAll(() => SecurityPage());
       //       return;
       //     }
-
+      //     // todo comment it for debug only 
       //     bool developerMode = await FlutterJailbreakDetection.developerMode;
       //     if (developerMode) {
       //       Get.offAll(() => SecurityPage());

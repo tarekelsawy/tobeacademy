@@ -17,7 +17,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 //apply plugin: 'com.huawei.agconnect'
 android {
-    namespace "com.zxra.beacademy"
+    namespace "com.thezxras.toacademy"
     compileSdkVersion 34
 
     packagingOptions {
@@ -37,11 +37,12 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.zxra.beacademy"
+        applicationId "com.thezxras.toacademy"
+        // applicationId "com.zxra.beacademy"
         minSdkVersion 23
         targetSdkVersion 34
-        versionCode 32
-        versionName "1.2.5"
+        versionCode 4
+        versionName "1.0.0"
         multiDexEnabled true
     }
 
