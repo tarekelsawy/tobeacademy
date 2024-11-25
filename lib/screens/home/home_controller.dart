@@ -102,122 +102,122 @@ class HomeController extends BottomBarController {
 
   _security() async {
     try {
-      // var response = await DioClient().dio.get(Api.securitySettings);
-      // var data = response.data;
-      // isSecure = data['no_subscribe'] != '1';
-      // if (isSecure) {
-      //   items.value = [
-      //     TabItem(
-      //       icon: Icons.chat,
-      //       title: 'chat'.tr,
-      //     ),
-      //     TabItem(
-      //       icon: Icons.video_collection_outlined,
-      //       title: 'my_courses'.tr,
-      //     ),
-      //     TabItem(
-      //       icon: Icons.home_outlined,
-      //       title: 'home'.tr,
-      //     ),
-      //     TabItem(
-      //       icon: Icons.live_tv_rounded,
-      //       title: 'live'.tr,
-      //     ),
-      //     const TabItem(
-      //       icon: Icons.file_open_sharp,
-      //       title: 'التقرير',
-      //     )
-      //   ];
+      var response = await DioClient().dio.get(Api.securitySettings);
+      var data = response.data;
+      isSecure = data['no_subscribe'] != '1';
+      if (isSecure) {
+        items.value = [
+          TabItem(
+            icon: Icons.chat,
+            title: 'chat'.tr,
+          ),
+          TabItem(
+            icon: Icons.video_collection_outlined,
+            title: 'my_courses'.tr,
+          ),
+          TabItem(
+            icon: Icons.home_outlined,
+            title: 'home'.tr,
+          ),
+          TabItem(
+            icon: Icons.live_tv_rounded,
+            title: 'live'.tr,
+          ),
+          const TabItem(
+            icon: Icons.file_open_sharp,
+            title: 'التقرير',
+          )
+        ];
 
-      //   screens.insert(1, MyCoursesScreen());
-      //   selectIndex(2);
-      //   tabController = TabController(length: items.length, vsync: this);
-      //   tabController!.index = 2;
-      // }
-      // if (data['key'] == '1') {
-      //   isExit = true;
+        screens.insert(1, MyCoursesScreen());
+        selectIndex(2);
+        tabController = TabController(length: items.length, vsync: this);
+        tabController!.index = 2;
+      }
+      if (data['key'] == '1') {
+        isExit = true;
 
-      //   if (Platform.isIOS) {
-      //     ////111
-      //     await ScreenProtector.preventScreenshotOn();
-      //     bool jailbroken = await FlutterJailbreakDetection.jailbroken;
-      //     if (jailbroken) {
-      //       Get.offAll(() => SecurityPage());
-      //       return;
-      //     }
-      //   } else if (Platform.isAndroid) {
-      //     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      //     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        if (Platform.isIOS) {
+          ////111
+          await ScreenProtector.preventScreenshotOn();
+          bool jailbroken = await FlutterJailbreakDetection.jailbroken;
+          if (jailbroken) {
+            Get.offAll(() => SecurityPage());
+            return;
+          }
+        } else if (Platform.isAndroid) {
+          DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+          AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
 
-      //     if ((androidInfo.version.sdkInt) < 27) {
-      //       Get.offAll(() => SecurityPage());
-      //       return;
-      //     }
-      //     var memorySize = 0;
-      //     try {
-      //       memorySize = SysInfo.getFreeVirtualMemory();
-      //     } catch (e) {}
-      //     if (memorySize <= 0) {
-      //       Get.offAll(() => SecurityPage());
-      //       return;
-      //     }
-      //     bool jailbroken = await FlutterJailbreakDetection.jailbroken;
-      //     if (jailbroken) {
-      //       Get.offAll(() => SecurityPage());
-      //       return;
-      //     }
-      //     // todo comment it for debug only 
-      //     bool developerMode = await FlutterJailbreakDetection.developerMode;
-      //     if (developerMode) {
-      //       Get.offAll(() => SecurityPage());
-      //       return;
-      //     }
-      //     final info = await DeviceInfoPlugin().deviceInfo;
-      //     print(info);
-      //     if (Platform.isAndroid) {
-      //       String? radioVersion;
-      //       try {
-      //         radioVersion = await GetRadioVersionPlugin.radioVersion ??
-      //             'Unknown radio version';
-      //       } on PlatformException {
-      //         radioVersion = 'Failed to get radio version.';
-      //       }
+          if ((androidInfo.version.sdkInt) < 27) {
+            Get.offAll(() => SecurityPage());
+            return;
+          }
+          var memorySize = 0;
+          try {
+            memorySize = SysInfo.getFreeVirtualMemory();
+          } catch (e) {}
+          if (memorySize <= 0) {
+            Get.offAll(() => SecurityPage());
+            return;
+          }
+          bool jailbroken = await FlutterJailbreakDetection.jailbroken;
+          if (jailbroken) {
+            Get.offAll(() => SecurityPage());
+            return;
+          }
+          // todo comment it for debug only 
+          bool developerMode = await FlutterJailbreakDetection.developerMode;
+          if (developerMode) {
+            Get.offAll(() => SecurityPage());
+            return;
+          }
+          final info = await DeviceInfoPlugin().deviceInfo;
+          print(info);
+          if (Platform.isAndroid) {
+            String? radioVersion;
+            try {
+              radioVersion = await GetRadioVersionPlugin.radioVersion ??
+                  'Unknown radio version';
+            } on PlatformException {
+              radioVersion = 'Failed to get radio version.';
+            }
 
-      //       if (await EmulatorCheck.isEmulator(info, radioVersion) == true) {
-      //         // exit(0); 
-      //         Get.offAll(() => SecurityPage());
-      //       }
-      //     }
-      //     // Check for common files indicating an Android emulator
-      //     List<String> emulatorFiles = [
-      //       '/storage/emulated/0/storage/secure',
-      //       '/storage/emulated/0/Android/data/com.android.ld.appstore',
-      //     ];
+            if (await EmulatorCheck.isEmulator(info, radioVersion) == true) {
+              // exit(0); 
+              Get.offAll(() => SecurityPage());
+            }
+          }
+          // Check for common files indicating an Android emulator
+          List<String> emulatorFiles = [
+            '/storage/emulated/0/storage/secure',
+            '/storage/emulated/0/Android/data/com.android.ld.appstore',
+          ];
 
-      //     var isFileExist = true;
-      //     for (String filePath in emulatorFiles) {
-      //       if (File(filePath).existsSync()) {
-      //         isFileExist = true;
-      //       }
-      //     }
-      //     if (!isFileExist) {
-      //       Get.offAll(() => SecurityPage());
-      //       return;
-      //     }
+          var isFileExist = true;
+          for (String filePath in emulatorFiles) {
+            if (File(filePath).existsSync()) {
+              isFileExist = true;
+            }
+          }
+          if (!isFileExist) {
+            Get.offAll(() => SecurityPage());
+            return;
+          }
 
-      //     await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-      //   } else {
-      //     Get.offAll(() => SecurityPage());
-      //   }
-      // } else {
-      //   if (Platform.isAndroid) {
+          await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+        } else {
+          Get.offAll(() => SecurityPage());
+        }
+      } else {
+        if (Platform.isAndroid) {
       
-      //     await FlutterWindowManager.clearFlags(
-      //         FlutterWindowManager.FLAG_SECURE);
-      //   } else if (Platform.isIOS) {
-      //     await ScreenProtector.preventScreenshotOff();
-      //   }
-      // }
+          await FlutterWindowManager.clearFlags(
+              FlutterWindowManager.FLAG_SECURE);
+        } else if (Platform.isIOS) {
+          await ScreenProtector.preventScreenshotOff();
+        }
+      }
     } catch (e) {}
 
     _showTerms();
