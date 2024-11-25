@@ -45,7 +45,7 @@ initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   String packageName = packageInfo.packageName;
-  if ((Platform.isAndroid && packageName == 'com.thezxras.toacademy') ||
+  if ((Platform.isAndroid && packageName == 'com.zxra.beacademy') ||
       (Platform.isIOS && packageName == 'com.academy.tobeacademy')) {
 // final config = TalsecConfig(
 //     /// For Android
